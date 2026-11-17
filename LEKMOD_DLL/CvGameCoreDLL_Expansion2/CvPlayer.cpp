@@ -1290,6 +1290,9 @@ void CvPlayer::uninit()
 	m_bHasAdoptedStateReligion = false;
 	m_bAlliesGreatPersonBiasApplied = false;
 	m_lastGameTurnInitialAIProcessed = -1;
+#if defined(LEKMOD_v34)
+	m_bCanChooseReformationBelief = false;
+#endif
 
 #if defined(LEKMOD_PROMO_YIELD_FROM_CONVERSION) && defined(LEKMOD_PROMO_CONVERSION_MAJORITY_ONLY_ONCE)
 	m_aiConversionMajorityOnceUsedKeys.clear();
