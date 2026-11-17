@@ -1394,9 +1394,11 @@ Diversify Spain and Australia's NW Discovery bonus
 #define AUTOSAVE_FIX_PREVENT_TURN_SKIP
 // -------------------------
 
-// -- Debug minidump
+// -- Debug minidump (Windows only: dbghelp)
 
+#if !defined(__APPLE__)
 #define AUI_MINIDUMPS
+#endif
 #define MINIDUMP_ADDITIONAL_INFOS
 //Firstmove fix, still allowing 1 move on turn load. Immos version of LEKMOD_FIRSTMOVE_FIX
 
