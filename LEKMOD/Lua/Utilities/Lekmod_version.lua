@@ -197,9 +197,22 @@ function LekmodVersion.ResultFromVersionsBody(body, source)
 	return ResultFromLatest(localVersion, latest, fileId, source or "http")
 end
 
+-- Stamp file written by the Mac installer (LEKMOD_DLL/mac/install.py), next to LekmodUiConfigured.
+function LekmodVersion.IsMac()
+	local previous = LekmodPlatform
+	LekmodPlatform = nil
+	pcall(function()
+		include("LekmodPlatform")
+	end)
+	local isMac = LekmodPlatform == "mac"
+	LekmodPlatform = previous
+	return isMac
+end
+
 -- Undocumented vanilla API (FireWire FHttpRequest in CivilizationV*.exe).
+-- The Mac (Aspyr) version registers it but crashes the game when it is called.
 function LekmodVersion.HasHttpRequest()
-	return Network ~= nil and type(Network.HttpRequest) == "function"
+	return Network ~= nil and type(Network.HttpRequest) == "function" and not LekmodVersion.IsMac()
 end
 
 function LekmodVersion.StartHttpVersionsRequest(urlIndex)
