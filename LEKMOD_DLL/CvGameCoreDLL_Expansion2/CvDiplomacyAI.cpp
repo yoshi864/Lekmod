@@ -14521,7 +14521,9 @@ void CvDiplomacyAI::DoRequest(PlayerTypes ePlayer, DiploStatementTypes& eStateme
 		if(GetNumTurnsSinceStatementSent(ePlayer, eTempStatement) >= 60 &&
 		        GetNumTurnsSinceStatementSent(ePlayer, DIPLO_STATEMENT_REQUEST_RANDFAILED) >= 15)
 		{
-			bool bRandPassed;	// This is used to see if we WOULD have made a request, but the rand roll failed (so add an entry to the log)
+			// This is used to see if we WOULD have made a request, but the rand roll failed (so add an entry to the log).
+			// IsMakeRequest only sets it when it rolls; true otherwise, so no failed roll is logged when none was made.
+			bool bRandPassed = true;
 			bool bMakeRequest = IsMakeRequest(ePlayer, pDeal, bRandPassed);
 
 			// Want to make a request of ePlayer? Pass pDeal in to see if there's actually anything we want
