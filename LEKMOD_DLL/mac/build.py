@@ -41,6 +41,9 @@ CXXFLAGS = [
     # Determinism: MSVC never exploits signed overflow or aliasing; match it, and
     # never fuse or reassociate floating point (Aspyr's reference build is plain SSE).
     "-fwrapv", "-fno-strict-aliasing", "-ffp-contract=off",
+    # MSVC 2008's x87 code evaluates float expressions in double precision and rounds only
+    # on assignment, cast, argument and return; SSE would round every float operation.
+    "-ffp-eval-method=double",
     # MSVC accepts these; keep its behaviour rather than editing the sources.
     "-Wno-invalid-token-paste", "-fallow-editor-placeholders", "-Wno-c++11-narrowing",
     "-w", "-ferror-limit=0",

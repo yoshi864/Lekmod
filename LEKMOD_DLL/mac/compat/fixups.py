@@ -215,6 +215,19 @@ LITERALS = [
             "\t\t// Aspyr's hash containers are 72 bytes (see database-connection-maps); exe-only member.\n"
             "\t\talignas(8) unsigned char m_hshColumnPositions[72];", 1,
             "Results objects live on the game core's stack but are constructed by the exe"),
+    # -ffp-eval-method=double (see build.py) types float expressions as double; keep MSVC's
+    # float-typed arguments where a call would otherwise deduce or pick a double overload.
+    Literal("fpeval-team-max", "CvTeam.cpp", "MAX(0.0f, fTimeElapsed - fGameTurnEnd + fBaseTurnTime)",
+            "MAX(0.0f, (float)(fTimeElapsed - fGameTurnEnd + fBaseTurnTime))", 1,
+            "std::max(float, double-typed float expression) cannot deduce one type"),
+    Literal("fpeval-league-max", "CvVotingClasses.cpp",
+            "MAX((float)iBestContribution, GC.getLEAGUE_PROJECT_REWARD_TIER_2_THRESHOLD() * GetProjectCostPerPlayer(eLeagueProject))",
+            "MAX((float)iBestContribution, (float)(GC.getLEAGUE_PROJECT_REWARD_TIER_2_THRESHOLD() * GetProjectCostPerPlayer(eLeagueProject)))", 1,
+            "std::max(float, double-typed float expression) cannot deduce one type"),
+    Literal("fpeval-pushargument-double", "CvLocalization.h", "\t\tCvLocalizationAPI bool PushArgument(const double val);",
+            "\t\t// Not exported by Aspyr's exe; float expressions (now double-typed) format as float, as on Windows.\n"
+            "\t\tbool PushArgument(const double val) { return PushArgument((float)val); }", 1,
+            "float expressions would bind the double overload, which the exe does not export"),
     Literal("inputdevice-map-alloc", "FInputDevice.h",
             "FSTL_Tagged_Allocator<std::pair<uint, uint>, 16,c_eMPoolTypeContainer> > HotKeyMap;",
             "FSTL_Tagged_Allocator<std::pair<const uint, uint>, 16,c_eMPoolTypeContainer> > HotKeyMap;", 1,
