@@ -1,0 +1,518 @@
+{
+"CvAICityStrategyEntry": [
+6
+],
+"CvAIGrandStrategyXMLEntry": [
+6
+],
+"CvAINavalEscortedOperation": [
+39
+],
+"CvAIOperation": [
+37
+],
+"CvAIOperationBasicCityAttack": [
+39
+],
+"CvAIOperationCityCloseDefense": [
+37
+],
+"CvAIOperationCityStateAttack": [
+39
+],
+"CvAIOperationConcertTour": [
+39
+],
+"CvAIOperationDestroyBarbarianCamp": [
+39
+],
+"CvAIOperationFoundCity": [
+39
+],
+"CvAIOperationMerchantDelegation": [
+39
+],
+"CvAIOperationNavalAttack": [
+40
+],
+"CvAIOperationNavalBombardment": [
+40
+],
+"CvAIOperationNavalCityStateAttack": [
+40
+],
+"CvAIOperationNavalSneakAttack": [
+40
+],
+"CvAIOperationNavalSuperiority": [
+40
+],
+"CvAIOperationNukeAttack": [
+39
+],
+"CvAIOperationPillageEnemy": [
+39
+],
+"CvAIOperationPureNavalCityAttack": [
+40
+],
+"CvAIOperationQuickColonize": [
+39
+],
+"CvAIOperationQuickSneakCityAttack": [
+39
+],
+"CvAIOperationRapidResponse": [
+37
+],
+"CvAIOperationSmallCityAttack": [
+39
+],
+"CvAIOperationSneakCityAttack": [
+39
+],
+"CvActiveResolution": [
+1
+],
+"CvArea": [
+2
+],
+"CvArmyAI": [
+4
+],
+"CvAutomateInfo": [
+4
+],
+"CvBaseInfo": [
+4
+],
+"CvBeliefEntry": [
+4
+],
+"CvBuildInfo": [
+6
+],
+"CvBuildingClassInfo": [
+6
+],
+"CvBuildingEntry": [
+4
+],
+"CvCity": [
+2
+],
+"CvCityAI": [
+11
+],
+"CvCitySpecializationXMLEntry": [
+6
+],
+"CvCityStrategyAI": [
+4
+],
+"CvCivilizationBaseInfo": [
+6
+],
+"CvCivilizationInfo": [
+6
+],
+"CvClimateInfo": [
+4
+],
+"CvColorInfo": [
+4
+],
+"CvCommandInfo": [
+4
+],
+"CvControlInfo": [
+4
+],
+"CvDeal": [
+2
+],
+"CvDllBuildInfo": [
+5
+],
+"CvDllBuildingInfo": [
+12
+],
+"CvDllCity": [
+26
+],
+"CvDllCivilizationInfo": [
+17
+],
+"CvDllColorInfo": [
+4
+],
+"CvDllCombatInfo": [
+19
+],
+"CvDllDatabaseUtility": [
+5
+],
+"CvDllDeal": [
+11
+],
+"CvDllDealAI": [
+8
+],
+"CvDllDiplomacyAI": [
+5
+],
+"CvDllDlcPackageInfo": [
+3
+],
+"CvDllDlcPackageInfoList": [
+5
+],
+"CvDllEraInfo": [
+7
+],
+"CvDllFeatureInfo": [
+14
+],
+"CvDllGame": [
+87
+],
+"CvDllGameAsynch": [
+20
+],
+"CvDllGameContext": [
+143
+],
+"CvDllGameDeals": [
+16
+],
+"CvDllGameOptionInfo": [
+5
+],
+"CvDllGameSpeedInfo": [
+5
+],
+"CvDllHandicapInfo": [
+5
+],
+"CvDllImprovementInfo": [
+12
+],
+"CvDllInterfaceModeInfo": [
+3
+],
+"CvDllLeaderHeadInfo": [
+4
+],
+"CvDllMap": [
+20
+],
+"CvDllMinorCivInfo": [
+10
+],
+"CvDllMissionData": [
+7
+],
+"CvDllMissionInfo": [
+4
+],
+"CvDllNetInitInfo": [
+6
+],
+"CvDllNetLoadGameInfo": [
+5
+],
+"CvDllNetMessageHandler": [
+66
+],
+"CvDllNetworkSyncronization": [
+11
+],
+"CvDllPathFinderUpdate": [
+5
+],
+"CvDllPathFinderUpdateList": [
+5
+],
+"CvDllPlayer": [
+68
+],
+"CvDllPlayerColorInfo": [
+5
+],
+"CvDllPlayerOptionInfo": [
+3
+],
+"CvDllPlot": [
+56
+],
+"CvDllPolicyInfo": [
+4
+],
+"CvDllPreGame": [
+218
+],
+"CvDllPromotionInfo": [
+4
+],
+"CvDllRandom": [
+10
+],
+"CvDllResourceInfo": [
+14
+],
+"CvDllScriptSystemUtility": [
+12
+],
+"CvDllTeam": [
+20
+],
+"CvDllTechInfo": [
+8
+],
+"CvDllTerrainInfo": [
+8
+],
+"CvDllUnit": [
+46
+],
+"CvDllUnitCombatClassInfo": [
+4
+],
+"CvDllUnitInfo": [
+11
+],
+"CvDllVictoryInfo": [
+4
+],
+"CvDllWorldBuilderMapLoader": [
+26
+],
+"CvEconomicAIStrategyXMLEntry": [
+6
+],
+"CvEmphasisEntry": [
+4
+],
+"CvEnactProposal": [
+3
+],
+"CvEntityEventInfo": [
+4
+],
+"CvEraInfo": [
+6
+],
+"CvFeatureInfo": [
+6
+],
+"CvFlavorRecipient": [
+2
+],
+"CvFractal": [
+2
+],
+"CvGameDeals": [
+2
+],
+"CvGameOptionInfo": [
+4
+],
+"CvGameSpeedInfo": [
+6
+],
+"CvGlobals": [
+2
+],
+"CvGoodyInfo": [
+4
+],
+"CvHandicapInfo": [
+6
+],
+"CvHotKeyInfo": [
+4
+],
+"CvHurryInfo": [
+4
+],
+"CvImprovementEntry": [
+4
+],
+"CvInterfaceModeInfo": [
+4
+],
+"CvLandmass": [
+4
+],
+"CvLeaderHeadInfo": [
+6
+],
+"CvLeagueNameEntry": [
+1
+],
+"CvLeagueProjectEntry": [
+4
+],
+"CvLeagueProjectRewardEntry": [
+4
+],
+"CvLeagueSpecialSessionEntry": [
+4
+],
+"CvMPOptionInfo": [
+4
+],
+"CvMap": [
+2
+],
+"CvMapGenerator": [
+2
+],
+"CvMilitaryAIStrategyXMLEntry": [
+6
+],
+"CvMinorCivInfo": [
+6
+],
+"CvMissionInfo": [
+4
+],
+"CvMultiUnitFormationInfo": [
+4
+],
+"CvNotificationEntry": [
+1
+],
+"CvPlayer": [
+4
+],
+"CvPlayerAI": [
+24
+],
+"CvPlayerColorInfo": [
+4
+],
+"CvPlayerOptionInfo": [
+4
+],
+"CvPlayerPolicies": [
+4
+],
+"CvPlayerTechs": [
+4
+],
+"CvPolicyBranchEntry": [
+4
+],
+"CvPolicyEntry": [
+4
+],
+"CvProcessInfo": [
+6
+],
+"CvProjectEntry": [
+4
+],
+"CvPromotionEntry": [
+4
+],
+"CvProposerDecision": [
+1
+],
+"CvRandom": [
+2
+],
+"CvReligionEntry": [
+4
+],
+"CvRepealProposal": [
+3
+],
+"CvReplayInfo": [
+2
+],
+"CvReplayMessage": [
+2
+],
+"CvResolutionEntry": [
+4
+],
+"CvResourceClassInfo": [
+4
+],
+"CvResourceInfo": [
+6
+],
+"CvRouteInfo": [
+6
+],
+"CvSeaLevelInfo": [
+4
+],
+"CvSiteEvaluatorForSettler": [
+14
+],
+"CvSiteEvaluatorForStart": [
+14
+],
+"CvSmallAwardInfo": [
+6
+],
+"CvSpecialUnitInfo": [
+6
+],
+"CvSpecialistInfo": [
+6
+],
+"CvStartPositioner": [
+1
+],
+"CvTacticalMoveXMLEntry": [
+6
+],
+"CvTeam": [
+2
+],
+"CvTechEntry": [
+4
+],
+"CvTerrainInfo": [
+6
+],
+"CvTraitEntry": [
+4
+],
+"CvTreasury": [
+2
+],
+"CvTurnTimerInfo": [
+5
+],
+"CvUnitClassInfo": [
+4
+],
+"CvUnitEntry": [
+4
+],
+"CvVictoryInfo": [
+6
+],
+"CvVoteInfo": [
+6
+],
+"CvVoteSourceInfo": [
+6
+],
+"CvVoterDecision": [
+1
+],
+"CvWonderProductionAI": [
+4
+],
+"CvWorldInfo": [
+5
+],
+"CvYieldInfo": [
+4
+]
+}

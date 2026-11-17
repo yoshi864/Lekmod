@@ -1,0 +1,34 @@
+// Microsoft SAL source annotations: no meaning for clang, defined empty.
+#pragma once
+#define _Check_return_
+#define _In_
+#define _In_opt_
+#define _In_opt_z_
+#define _In_z_
+#define _Ret_maybenull_
+#define _Ret_opt_
+#define _Ret_opt_z_
+#define _Ret_z_
+#define _In_bytecount_(...)
+#define _Inout_z_cap_(...)
+#define _Inout_z_cap_c_(...)
+// Old-style SAL
+#define __checkReturn
+#define __in
+#define __out
+#define __inout
+#define __in_opt
+#define __out_opt
+#define __inout_opt
+#define __in_z
+#define __in_z_opt
+#define __out_z
+#define __deref_out
+#define __deref_out_opt
+#define __in_ecount(x)
+#define __out_ecount(x)
+#define __out_ecount_opt(x)
+#define __in_bcount(x)
+#define __out_bcount(x)
+#define __inout_ecount(x)
+#define __reserved

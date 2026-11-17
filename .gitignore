@@ -74,3 +74,6 @@ desktop.ini
 
 # Build artifacts
 *.exe (except in releases)
+## macOS game core build output
+LEKMOD_DLL/mac/build/
+__pycache__/
