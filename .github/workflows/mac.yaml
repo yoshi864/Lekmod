@@ -1,0 +1,38 @@
+name: Mac Build
+
+run-name: "Mac: ${{ github.event_name != 'pull_request' && github.event.head_commit.message || github.event.pull_request.title }}"
+
+on:
+  push:
+    paths: [LEKMOD_DLL/**, .github/workflows/mac.yaml]
+  pull_request:
+    paths: [LEKMOD_DLL/**, .github/workflows/mac.yaml]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build game core for macOS
+    runs-on: macos-15
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            LEKMOD_DLL/
+            !**/BuildOutput/
+            !**/BuildTemp/
+          sparse-checkout-cone-mode: false
+
+      - name: Build and check against Aspyr's binaries
+        run: |
+          clang --version | head -1
+          python3 LEKMOD_DLL/mac/build.py
+          cd LEKMOD_DLL/mac/build && shasum -a 256 libCvGameCoreDLL_Expansion2_DLL.dylib | tee libCvGameCoreDLL_Expansion2_DLL.dylib.sha256
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Lekmod-CI-macOS
+          path: |
+            LEKMOD_DLL/mac/build/libCvGameCoreDLL_Expansion2_DLL.dylib
+            LEKMOD_DLL/mac/build/libCvGameCoreDLL_Expansion2_DLL.dylib.sha256
