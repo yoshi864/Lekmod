@@ -178,7 +178,8 @@ CitySpecializationTypes CvCitySpecializationXMLEntries::GetNextSpecializationFor
 #ifdef AUI_WARNING_FIXES
 	for (m_CurrentIndex = m_CurrentIndex + 1; m_CurrentIndex < (int)m_paCitySpecializationEntries.size(); m_CurrentIndex++)
 #else
-	for(m_CurrentIndex = m_CurrentIndex++; m_CurrentIndex < (int)m_paCitySpecializationEntries.size(); m_CurrentIndex++)
+	// Was 'm_CurrentIndex = m_CurrentIndex++' (undefined before C++17); MSVC advances by one.
+	for(m_CurrentIndex = m_CurrentIndex + 1; m_CurrentIndex < (int)m_paCitySpecializationEntries.size(); m_CurrentIndex++)
 #endif
 	{
 		if(m_paCitySpecializationEntries[m_CurrentIndex]->GetYieldType() == m_CurrentYield)
