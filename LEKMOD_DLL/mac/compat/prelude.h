@@ -384,3 +384,8 @@ namespace placeholders { using namespace std::placeholders; }
 #define NULL 0
 
 #endif // CIV5MAC_PRELUDE_H
+
+// Net-message debug logging (see fixup net-debug-log-off): never reaches the exe on the Mac.
+namespace civ5mac {
+template <class T> inline void netMessageDebugLog(const T&) {}
+}

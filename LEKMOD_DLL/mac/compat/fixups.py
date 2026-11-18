@@ -74,6 +74,9 @@ def _lua_wrapper_owner(text):
 
 
 RULES = [
+    Rule("net-debug-log-off", r"\bgDLL->netMessageDebugLog\(", "civ5mac::netMessageDebugLog(", 10,
+         "Aspyr's exe runs this debug text through a printf-style formatter even with MessageLog off, "
+         "and unit names in it can crash that (Great People names: see compat/prelude.h). Debug output only."),
     Rule("msvc-sort", r"\bstd::sort\s*\(", "civ5mac::msvc_sort(", 5,
          "std::sort orders tied elements differently per STL; use MSVC 2008's algorithm (compat/msvc_sort.h)."),
     # Windows is LLP64: long is 32 bits, and the game's results (RNG seeds that the exe
