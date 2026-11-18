@@ -150,7 +150,7 @@ public:
 	const char* getLeaderTypeKey() const;
 
 	bool isWhiteFlag() const;
-	const char* GetStateReligionName() const;
+	CvString GetStateReligionName() const;
 	CvString GetStateReligionKey() const;
 	void SetStateReligionKey(const char* strKey);
 	const CvString getWorstEnemyName() const;

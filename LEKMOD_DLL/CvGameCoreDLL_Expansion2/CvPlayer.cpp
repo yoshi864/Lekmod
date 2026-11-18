@@ -4994,7 +4994,8 @@ bool CvPlayer::isWhiteFlag() const
 
 
 //	--------------------------------------------------------------------------------
-const char* CvPlayer::GetStateReligionName() const
+// By value: GetLocalizedText returns a temporary, so a const char* into it would dangle.
+CvString CvPlayer::GetStateReligionName() const
 {
 	return GetLocalizedText(m_strReligionKey.get());
 }

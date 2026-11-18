@@ -1357,7 +1357,7 @@ int CvLuaPlayer::lIsWhiteFlag(lua_State* L)
 int CvLuaPlayer::lGetStateReligionName(lua_State* L)
 {
 	CvPlayerAI* pkPlayer = GetInstance(L);
-	lua_pushstring(L, pkPlayer->GetStateReligionName());
+	lua_pushstring(L, pkPlayer->GetStateReligionName().c_str());
 	return 1;
 }
 //------------------------------------------------------------------------------
