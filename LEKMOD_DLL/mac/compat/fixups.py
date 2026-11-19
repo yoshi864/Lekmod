@@ -227,6 +227,19 @@ LITERALS = [
             "MAX((float)iBestContribution, GC.getLEAGUE_PROJECT_REWARD_TIER_2_THRESHOLD() * GetProjectCostPerPlayer(eLeagueProject))",
             "MAX((float)iBestContribution, (float)(GC.getLEAGUE_PROJECT_REWARD_TIER_2_THRESHOLD() * GetProjectCostPerPlayer(eLeagueProject)))", 1,
             "std::max(float, double-typed float expression) cannot deduce one type"),
+    # MSVC passes a float expression to the <cmath> float overload, rounding it to float first
+    # (FindTargetSpyNumbers: fild; fmul dword; fstp dword; ...; call ceil). With
+    # -ffp-eval-method=double the expression is double-typed and picks the double overload
+    # unrounded: 0.3f * 10 = 3.0000001 -> ceil 4 instead of 3. Cast to float as MSVC does.
+    Literal("fpeval-espionage-ceil", "CvEspionageClasses.cpp", "(int)ceil(fTechPositionRatio * iNumRemainingSpies)",
+            "(int)ceil((float)(fTechPositionRatio * iNumRemainingSpies))", 3,
+            "float argument to ceil (offensive spy count)"),
+    Literal("fpeval-league-floor", "CvGame.cpp", "(int)floor(fCivVotesPortion + fCityStateVotesPortion)",
+            "(int)floor((float)(fCivVotesPortion + fCityStateVotesPortion))", 1,
+            "float argument to floor (votes needed to win)"),
+    Literal("fpeval-trade-ceil", "CvTradeClasses.cpp", "(int)ceil(iTechDifference / 2.0f)",
+            "(int)ceil((float)(iTechDifference / 2.0f))", 4,
+            "float argument to ceil (trade route tech difference)"),
     Literal("fpeval-pushargument-double", "CvLocalization.h", "\t\tCvLocalizationAPI bool PushArgument(const double val);",
             "\t\t// Not exported by Aspyr's exe; float expressions (now double-typed) format as float, as on Windows.\n"
             "\t\tbool PushArgument(const double val) { return PushArgument((float)val); }", 1,
