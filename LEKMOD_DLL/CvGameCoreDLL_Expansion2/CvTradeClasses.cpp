@@ -358,6 +358,14 @@ bool CvGameTrade::CreateTradeRoute(CvCity* pOriginCity, CvCity* pDestCity, Domai
 	if (iNewTradeRouteIndex < 0)
 	{
 		TradeConnection kNewTradeConnection;
+		// The yields are read before both players' UpdateTradeConnectionValues have run (the origin's
+		// values use the destination city's gold, which includes this route): start them at zero
+		// rather than whatever was on the stack, which made Windows players' gold differ (desyncs).
+		for (uint ui = 0; ui < NUM_YIELD_TYPES; ui++)
+		{
+			kNewTradeConnection.m_aiOriginYields[ui] = 0;
+			kNewTradeConnection.m_aiDestYields[ui] = 0;
+		}
 		m_aTradeConnections.push_back(kNewTradeConnection);
 		iNewTradeRouteIndex = m_aTradeConnections.size() - 1;
 	}
