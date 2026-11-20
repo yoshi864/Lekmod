@@ -2631,7 +2631,11 @@ int CvPlayerCulture::GetInfluencePerTurn(PlayerTypes ePlayer) const
 			iRtnValue += iInfluenceToAdd;
 		}
 #else
-		iModifier = m_pPlayer->getCapitalCity()->GetCityCulture()->GetTourismMultiplier(kOtherPlayer.GetID(), false, false, false, false, false);
+		// A player can be alive without a capital (all cities lost, or none founded yet): no
+		// capital, no modifier, as in the per-city loop above.
+		CvCity* pCapital = m_pPlayer->getCapitalCity();
+		if (pCapital)
+			iModifier = pCapital->GetCityCulture()->GetTourismMultiplier(kOtherPlayer.GetID(), false, false, false, false, false);
 		if (bPlayerHasInternet && bTargetHasGreatFirewall)
 		{
 			iRtnValue = (m_pPlayer->getYieldTimes100(YIELD_TOURISM, false) - m_pPlayer->getYieldFromCitiesTimes100(YIELD_TOURISM, false)) / 100;
