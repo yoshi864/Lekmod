@@ -246,6 +246,22 @@ LITERALS = [
     Literal("hasmet-no-team", "CvTeam.cpp", "\treturn m_abHasMet[eIndex];",
             "\treturn eIndex == NO_TEAM ? m_abHasFoundPlayersTerritory[REALLY_MAX_PLAYERS - 1] : m_abHasMet[eIndex];", 1,
             "isHasMet(NO_TEAM) reads the preceding member on Windows"),
+    # FireWorks containers take their index as unsigned int. A negative index (NO_PLAYER,
+    # NO_TEAM, ... = -1) then wraps: on 32-bit Windows base + 0xFFFFFFFF*size is base - size,
+    # the element before the array; on 64-bit it is 4 billion elements on, and crashes. Index
+    # with the signed value so the address is the one Windows uses.
+    Literal("index32-farray", "FArray.h", "return m_pData[i];", "return m_pData[(int)i];", 1,
+            "FArray: Windows' 32-bit wrap for negative indices"),
+    Literal("index32-farray-static", "FArray.h", "return ( m_akItems[ i ] );", "return ( m_akItems[ (int)i ] );", 2,
+            "Firaxis::Array: Windows' 32-bit wrap for negative indices"),
+    Literal("index32-fastvector", "FFastVector.h", "return m_pData[ui];", "return m_pData[(int)ui];", 2,
+            "FFastVector/FStaticVector: Windows' 32-bit wrap for negative indices"),
+    Literal("index32-fastvector-at", "FFastVector.h", "return m_pData[i];", "return m_pData[(int)i];", 2,
+            "FFastVector::at: Windows' 32-bit wrap for negative indices"),
+    Literal("index32-fastallocator", "FFastAllocator.h", "return m_pData[ui];", "return m_pData[(int)ui];", 2,
+            "FFastAllocator: Windows' 32-bit wrap for negative indices"),
+    Literal("index32-fastallocator-vec", "FFastAllocator.h", "return m_vec[ui];", "return m_vec[(int)ui];", 2,
+            "FFastAllocator: Windows' 32-bit wrap for negative indices"),
     Literal("fpeval-pushargument-double", "CvLocalization.h", "\t\tCvLocalizationAPI bool PushArgument(const double val);",
             "\t\t// Not exported by Aspyr's exe; float expressions (now double-typed) format as float, as on Windows.\n"
             "\t\tbool PushArgument(const double val) { return PushArgument((float)val); }", 1,
