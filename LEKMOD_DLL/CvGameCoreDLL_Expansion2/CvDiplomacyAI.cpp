@@ -4253,7 +4253,11 @@ MinorCivApproachTypes CvDiplomacyAI::GetBestApproachTowardsMinorCiv(PlayerTypes 
 	}
 
 	MinorCivApproachTypes eOldApproach = (MinorCivApproachTypes) m_paeApproachScratchPad[ePlayer];
-	viApproachWeights[eOldApproach] += /*2*/ GC.getMINOR_APPROACH_BIAS_FOR_CURRENT();
+	// No approach yet (NO_MINOR_CIV_APPROACH, -1): there is nothing to bias. Indexing with -1
+	// wrote outside the weights (harmless on Windows, where it hit the vector's capacity; a crash
+	// on 64-bit, where the index became 4 billion).
+	if (eOldApproach != NO_MINOR_CIV_APPROACH)
+		viApproachWeights[eOldApproach] += /*2*/ GC.getMINOR_APPROACH_BIAS_FOR_CURRENT();
 
 	// If we're planning a war then give it a bias so that we don't get away from it too easily
 	if(eOldApproach == MINOR_CIV_APPROACH_CONQUEST)
