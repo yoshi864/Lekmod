@@ -4696,6 +4696,10 @@ CvTechEntry* CvGlobals::getTechInfo(TechTypes eTechNum)
 {
 	CvAssert(eTechNum > -1);
 	CvAssert(eTechNum < GC.getNumTechInfos());
+	// Callers check for NULL (e.g. upgradePrice with NO_TECH); indexing with -1 read whatever
+	// preceded the array, a garbage pointer (crash on 64-bit, garbage upgrade costs on Windows).
+	if (eTechNum < 0 || eTechNum >= GC.getNumTechInfos())
+		return NULL;
 	return m_pTechs->GetTechEntries()[eTechNum];
 #endif
 }
