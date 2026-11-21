@@ -240,6 +240,12 @@ LITERALS = [
     Literal("fpeval-trade-ceil", "CvTradeClasses.cpp", "(int)ceil(iTechDifference / 2.0f)",
             "(int)ceil((float)(iTechDifference / 2.0f))", 4,
             "float argument to ceil (trade route tech difference)"),
+    # SetHasLostCapital can ask isHasMet(NO_TEAM). On Windows, m_abHasMet[-1] reads the byte
+    # before the array, the last entry of m_abHasFoundPlayersTerritory (same layout here); on
+    # 64-bit the index becomes 4 billion and the game crashes. Read what Windows reads.
+    Literal("hasmet-no-team", "CvTeam.cpp", "\treturn m_abHasMet[eIndex];",
+            "\treturn eIndex == NO_TEAM ? m_abHasFoundPlayersTerritory[REALLY_MAX_PLAYERS - 1] : m_abHasMet[eIndex];", 1,
+            "isHasMet(NO_TEAM) reads the preceding member on Windows"),
     Literal("fpeval-pushargument-double", "CvLocalization.h", "\t\tCvLocalizationAPI bool PushArgument(const double val);",
             "\t\t// Not exported by Aspyr's exe; float expressions (now double-typed) format as float, as on Windows.\n"
             "\t\tbool PushArgument(const double val) { return PushArgument((float)val); }", 1,
