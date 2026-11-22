@@ -1092,6 +1092,14 @@ public:
     __forceinline T*
     deleteNode( T* tData )
     {
+        // Callers (CvCity::popOrder) can hold a node across code that empties or reallocates
+        // the list. Deleting it then shrank an empty list to 0xFFFFFFFF elements, a 4 GB
+        // allocation that fails on Windows (NULL data, crash on the next order) and hangs or
+        // crashes 64-bit builds. A node that is no longer in the list is already gone.
+        if( mVec.size() == 0 || tData < &mVec[ 0 ] || tData >= &mVec[ 0 ] + mVec.size() )
+        {
+            return NULL;
+        }
         UINT uDeletePos = tData - &mVec[ 0 ];
 
         for( UINT uIdx = uDeletePos; uIdx + 1 < mVec.size(); ++uIdx )
