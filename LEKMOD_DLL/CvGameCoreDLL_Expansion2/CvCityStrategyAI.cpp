@@ -3421,6 +3421,10 @@ bool CityStrategyAIHelpers::IsTestCityStrategy_GoodAirliftCity(CvCity *pCity)
 		return false;
 	if (pCity->getArea() != pCapital->getArea())
 #else
+	// A player can be alive without a capital (all original cities lost): no capital, no
+	// reason to airlift here. Dereferencing it crashed the game.
+	if (!pCapital)
+		return false;
 	if (pCity && pCity->getArea() != pCapital->getArea())
 #endif
 	{

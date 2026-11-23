@@ -7842,6 +7842,11 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 					continue;
 				}
 
+				// A city-state that lost its capital but kept other cities has none to measure to.
+				if (GET_PLAYER(ePlayer).getCapitalCity() == NULL)
+				{
+					continue;
+				}
 				// record the distance from the city-state to the goody hut
 				int iNewDistance = plotDistance(pPlot->getX(), pPlot->getY(), GET_PLAYER(ePlayer).getCapitalCity()->getX(), GET_PLAYER(ePlayer).getCapitalCity()->getY());
 				if (iDistance == -1 || iNewDistance < iDistance)
