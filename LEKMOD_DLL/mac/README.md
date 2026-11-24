@@ -92,7 +92,7 @@ The goal is a Mac game core that plays **exactly** like the Windows DLL, since m
     - g16 hit the build-queue bug on both machines (fixed since: `a48f973`).
     - g11 hit the airlift-city crash on the Mac (fixed since: `fc8a139`).
     - g02 and g12 hit a Mac-only crash inside Aspyr's executable (under investigation, below).
-  - **Diverged (1 game):** g25 at turn 182 (under investigation, below).
+  - **Diverged (1 game):** g25 at turn 181. Cause found and fixed since (`5f5cd1b`, below): an uninitialised read on the Windows side.
   - **Not compared:** g10 never launched on the Mac ("Failed to Load database"); g04 and g06 are still being played on Windows.
 
 ## What testing has found
@@ -112,6 +112,7 @@ The goal is a Mac game core that plays **exactly** like the Windows DLL, since m
 | `826af6a` | `viApproachWeights[NO_MINOR_CIV_APPROACH]` (index -1) in `GetBestApproachTowardsMinorCiv` | Harmless out-of-bounds read on 32-bit Windows; crash on 64-bit |
 | `2765ffc`, `4420656` | `getTechInfo(NO_TECH)` from `CvUnit::upgradePrice`, and other unchecked info getters | Same pattern: a harmless read at index -1 on Win32, a crash on 64-bit |
 | `db7c08b` | New Zealand Lua passes `GetOverflowResearch()` as a tech ID | Out-of-bounds write and crash when nothing is being researched |
+| `5f5cd1b` | `CvCityStrategyAI`'s yield deltas are only initialised under `AUI_WARNING_FIXES` (off), and only computed at the start of worker tasking | For a city captured or founded that turn, `ScorePlot` weighs worker builds with heap garbage, so workers choose differently on every machine. Found as g25's divergence: a worker's oil well scored 4× higher on the Mac (zeros) than on Windows (garbage) right after Palmyra captured Edessa. |
 
 ### Differences between MSVC 2008 and clang, fixed in the Mac build
 
@@ -134,8 +135,8 @@ Two Lekmap issues also turned up, not fixed here:
   - A unit's animated model (`FGrannyAssetInstance`) is alive and valid, but one pointer in its list of sub-objects (state machines) is off by 2 bytes, so the next virtual call through it crashes.
   - The list's storage is in the engine's own memory pool. The crash reproduces exactly on replay (g12, turn 169), so we're catching the write that corrupts it with a hardware watchpoint.
   - It can't be fixed in LekMod's code unless the game core turns out to trigger it. Otherwise the fix would be a small patch to the Mac executable, like the existing Crossplay Fix patch.
-- **g25 divergence at turn 182.** One of player 1's units differs in position or damage, and the sync rolls split at turn 184. A detail replay on both machines will name the unit and the code.
-- **Mac launch failure** ("Failed to Load database"): occasionally a game won't start on the Mac, even with a fresh database cache. We're checking whether it's deterministic for particular setups.
+- **Confirming `5f5cd1b` on Windows:** the g25 fix needs a CI-built Windows DLL to show g25 identical on both machines.
+- **Mac launch failure** ("Failed to Load database"): occasionally a game won't start on the Mac, even with a fresh database cache. It isn't tied to the game setup: g10, which failed three times in the matrix, launched first time when retried.
 - **Next matrix:** a full Deity rerun with a fresh CI Windows DLL and Mac build from the same commit, including every fix above.
 
 The test harness and tools (`suite.py`, the Lua harness, matrix generator, poison builds and bisection) live in a separate repository for now. They can be added here if that's useful.
