@@ -93,7 +93,10 @@ The goal is a Mac game core that plays **exactly** like the Windows DLL, since m
     - g11 hit the airlift-city crash on the Mac (fixed since: `fc8a139`).
     - g02 and g12 hit a Mac-only crash inside Aspyr's executable (under investigation, below).
   - **Diverged (1 game):** g25 at turn 181. Cause found and fixed since (`5f5cd1b`, below): an uninitialised read on the Windows side.
-  - **Not compared:** g10 never launched on the Mac ("Failed to Load database"); g04 and g06 are still being played on Windows.
+  - **Also identical up to a stop:**
+    - g06 matched for 1.17 million sync rolls, up to a silent Mac exit at turn 291. It didn't reproduce on replay, which played straight past.
+    - g04 matched for 583,000 rolls, up to a silent Windows exit at turn 169 (old DLL, no crash dump). That's probably the build-queue bug, which the Mac build already had fixed.
+  - **Not compared:** g10 never launched on the Mac ("Failed to Load database").
 
 ## What testing has found
 
