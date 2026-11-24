@@ -92,7 +92,7 @@ The goal is a Mac game core that plays **exactly** like the Windows DLL, since m
     - g16 hit the build-queue bug on both machines (fixed since: `a48f973`).
     - g11 hit the airlift-city crash on the Mac (fixed since: `fc8a139`).
     - g02 and g12 hit a Mac-only crash inside Aspyr's executable (under investigation, below).
-  - **Diverged (1 game):** g25 at turn 181. Cause found and fixed since (`5f5cd1b`, below): an uninitialised read on the Windows side.
+  - **Diverged (1 game):** g25 at turn 181, from an uninitialised read on the Windows side. Fixed since (`5f5cd1b`, below): with the fix, g25 is identical on both machines (2,581 snapshots, 200,271 sync rolls, through turn 186).
   - **Also identical up to a stop:**
     - g06 matched for 1.17 million sync rolls, up to a silent Mac exit at turn 291. It didn't reproduce on replay, which played straight past.
     - g04 matched for 583,000 rolls, up to a silent Windows exit at turn 169 (old DLL, no crash dump). That's probably the build-queue bug, which the Mac build already had fixed.
@@ -138,7 +138,6 @@ Two Lekmap issues also turned up, not fixed here:
   - A unit's animated model (`FGrannyAssetInstance`) is alive and valid, but one pointer in its list of sub-objects (state machines) is off by 2 bytes, so the next virtual call through it crashes.
   - The list's storage is in the engine's own memory pool. The crash reproduces exactly on replay (g12, turn 169), so we're catching the write that corrupts it with a hardware watchpoint.
   - It can't be fixed in LekMod's code unless the game core turns out to trigger it. Otherwise the fix would be a small patch to the Mac executable, like the existing Crossplay Fix patch.
-- **Confirming `5f5cd1b` on Windows:** the g25 fix needs a CI-built Windows DLL to show g25 identical on both machines.
 - **Mac launch failure** ("Failed to Load database"): occasionally a game won't start on the Mac, even with a fresh database cache. It isn't tied to the game setup: g10, which failed three times in the matrix, launched first time when retried.
 - **Next matrix:** a full Deity rerun with a fresh CI Windows DLL and Mac build from the same commit, including every fix above.
 
