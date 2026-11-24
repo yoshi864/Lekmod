@@ -326,6 +326,14 @@ void CvCityStrategyAI::Reset()
 	m_eDefaultSpecialization = NO_CITY_SPECIALIZATION;
 	m_eFocusYield = (YieldTypes)NO_YIELD;
 
+	// Only initialised under AUI_WARNING_FIXES, and only computed by UpdateBestYields at the start of
+	// worker tasking, so a city founded or captured later in the turn would be scored with garbage
+	for(iI = 0; iI < NUM_YIELD_TYPES; iI++)
+	{
+		m_asBestYieldAverageTimes100[iI] = 0;
+		m_asYieldDeltaTimes100[iI] = 0;
+	}
+
 	// Reset sub AI objects
 	m_pBuildingProductionAI->Reset();
 	m_pUnitProductionAI->Reset();
