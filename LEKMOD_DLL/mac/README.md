@@ -82,8 +82,16 @@ The goal is a Mac game core that plays **exactly** like the Windows DLL, since m
 
 - **Matrix-50 (quick games):** 25 games covering all 114 LekMod civs (each twice) and every Lekmap map script, at multiplayer settings.
 - **Deity matrix (long games):** the same 25 games at Deity, played to the late game. That's 220 to 400 turns, up to 21 civs plus city-states on Huge maps, and about 1,000 units at peak. These games exercise far more AI and late-game code, and take 1 to 5 hours each.
+- **Modifier matrix:** 25 new Deity games with the same maps, lengths and civ variety (fresh seeds and civ groupings), testing every game option. The Deity matrix only ever changed nine options, so most of LekMod's option-gated code never ran. Here, each of 56 options is set away from its default in exactly two games, 4 or 5 per game. That covers every option LekMod adds (no combat randomness, alternative golden ages, spoils of war, no destructive recapture, AI XP cap, the AI handicap and "gimp" options, tech/scientist/policy saving rules, fast hand, first move, turn timers and more), every base-game option, and sequential and hybrid turns. Options that cancel each other out are never dealt to the same game, and only setup-screen-only options are left out. Each Lekmap game also has five of its map options changed (world age, rainfall, resources, natural wonders and so on).
 
-## Status (2026-11-25)
+From the modifier matrix on, each machine runs its own games: a runner on the Mac (under launchd) and one inside the Windows VM (a scheduled task) plays the matrix locally. It replays any game interrupted by a crash or reboot, and keeps results until the Mac fetches and compares them. So the two machines don't need to stay connected.
+
+## Status (2026-11-27)
+
+- **Modifier matrix (Mac build `5f5cd1b` vs Windows CI DLL from the same code): no divergences.**
+  - **Identical, end to end (21 games).** Every snapshot and every sync roll matched: 15.2 million sync rolls across the matrix, up to 1.6 million in a single game.
+  - **Identical up to a Mac-only crash (4 games):** m02, m12 and m23 hit the Aspyr executable crash described below, and m14 hit a second Mac executable crash in UI drawing (below). Neither is in LekMod's code, and the game state matched Windows right up to each crash.
+  - **All 56 options** ran in two compared games each, without a single Mac-versus-Windows difference.
 
 - **Matrix-50:** 24 of 25 games identical on Mac and Windows: every snapshot and every sync roll, over 600,000 rolls in all. The 25th (g05) differs because of a Windows-side bug: the Windows DLL itself gives different results for that game depending on stack layout (see `bRandPassed` below). The Mac matches one of the two Windows outcomes.
 - **Deity matrix (Mac build vs Windows CI DLL, both from `17401c1`):**
@@ -133,15 +141,17 @@ Two Lekmap issues also turned up, not fixed here:
 
 ## What we're working on
 
-- **Mac-only crash in Aspyr's executable (g02, g12; possibly g06).** This is the last known Mac-only crash. The game state is identical to Windows right up to it.
+- **Mac-only crash in Aspyr's executable (Deity g02, g12, possibly g06; modifier m02, m12, m23).** This is the main Mac-only crash left, roughly one long game in eight. The game state is identical to Windows right up to it.
   - It happens in the Mac executable's unit-graphics code, which reacts to the game core's unit events.
   - A unit's animated model (`FGrannyAssetInstance`) is alive and valid, but one pointer in its list of sub-objects (state machines) is off by 2 bytes, so the next virtual call through it crashes.
   - The list's storage is in the engine's own memory pool. The crash reproduces exactly on replay (g12, turn 169), so we're catching the write that corrupts it with a hardware watchpoint.
   - It can't be fixed in LekMod's code unless the game core turns out to trigger it. Otherwise the fix would be a small patch to the Mac executable, like the existing Crossplay Fix patch.
-- **Mac launch failure** ("Failed to Load database"): occasionally a game won't start on the Mac, even with a fresh database cache. It isn't tied to the game setup: g10, which failed three times in the matrix, launched first time when retried.
-- **Next matrix:** a full Deity rerun with a fresh CI Windows DLL and Mac build from the same commit, including every fix above.
+- **Mac-only UI drawing crash (m14).** The executable's UI renderer collects each frame's draw commands in a fixed-capacity list, and calls `abort()` when the list is full. It happened once, on a Small map with about 840 units, most of them on screen at once.
+- **Are these crashes LekMod's at all?** Neither crash has LekMod's code on the stack: both are in the executable's rendering. Next we're checking whether unmodded Civ V on macOS crashes the same way. If it does, these are Aspyr port issues that every Mac player already has, and they don't block shipping LekMod for Mac.
+- **Multiplayer:** LAN games between a Mac and a Windows PC on this build, played by hand.
+- **Mac launch failure** ("Failed to Load database"): occasionally a game won't start on the Mac, even with a fresh database cache. It isn't tied to the game setup: g10, m13 and m22 each failed three times in a row, then launched first time when retried.
 
-The test harness and tools (`suite.py`, the Lua harness, matrix generator, poison builds and bisection) live in a separate repository for now. They can be added here if that's useful.
+The test harness and tools (`suite.py`, the runner, the Lua harness, matrix generators, poison builds and bisection) live in a separate repository for now. They can be added here if that's useful.
 
 ## Is this AI-made?
 
